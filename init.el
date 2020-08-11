@@ -106,6 +106,9 @@
 (add-hook 'before-save-hook #'save-scss)
 
 
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
+
 ;;(message "This message appears in the echo area!")
 
 ;;(add-hook 'before-save-hook 'css-save-hook)
