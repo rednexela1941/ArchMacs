@@ -42,7 +42,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -81,12 +81,19 @@
   (interactive)
   (scss-mode)
   (company-mode)
- 
-)
+  )
+
+(defun setup-ts-mode ()
+  (interactive)
+  (typescript-mode)
+  (company-mode)
+  (tide-setup)
+  )
 
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
 
 
 ;; aligns annotation to the right hand side
@@ -124,4 +131,6 @@
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
+;; Remove the stupid sleep command
+(global-unset-key (kbd "C-z"))
 
