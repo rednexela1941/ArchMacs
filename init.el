@@ -42,7 +42,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -88,12 +88,21 @@
   (typescript-mode)
   (company-mode)
   (tide-setup)
+  (flycheck-mode)
   )
 
+
+(defun setup-c-mode ()
+  (interactive)
+  (c-mode)
+  (company-mode)
+  (c-turn-on-eldoc-mode)
+  )
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
 
 
 ;; aligns annotation to the right hand side
@@ -127,6 +136,7 @@
 ;;(require 'py-yapf)
 ;;(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
 (add-hook 'python-mode-hook 'yapf-mode)
+(add-hook 'python-mode-hook 'company-mode)
 
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
