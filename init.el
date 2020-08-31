@@ -20,9 +20,13 @@
 
 (setq x-super-keysym 'meta)
 
-;;(set-default-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 10")
 
-(load-theme 'doom-one t)
+;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
+;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
+;; Syntax (load-theme 'name t)
+;;(load-theme 'doom-one t)
+(load-theme 'gruvbox-dark-medium t)
 
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
@@ -42,7 +46,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
