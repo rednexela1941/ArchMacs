@@ -20,7 +20,7 @@
 
 (setq x-super-keysym 'meta)
 
-(set-frame-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 12")
 
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
@@ -53,6 +53,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 
 
 (defun setup-tide-mode ()
