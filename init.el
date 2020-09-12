@@ -27,6 +27,7 @@
 ;; Syntax (load-theme 'name t)
 ;;(load-theme 'doom-one t)
 (load-theme 'gruvbox-dark-medium t)
+;;(load-theme 'humanoid-dark t)
 
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
@@ -46,7 +47,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(julia-mode company-go go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -102,6 +103,12 @@
   (c-mode)
   (company-mode)
   (c-turn-on-eldoc-mode)
+  )
+
+(defun setup-go-mode ()
+  (interactive)
+  (go-mode)
+  (company-mode)
   )
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
