@@ -111,11 +111,17 @@
   (company-mode)
   )
 
+(defun setup-julia-mode ()
+  (interactive)
+  (julia-mode)
+  (company-mode)
+  )
+
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
-
+(add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
