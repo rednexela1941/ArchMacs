@@ -1,6 +1,44 @@
 (require 'package)
+
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
+
+
+;;(ac-config-default)
+;;(global-auto-complete-mode t)
+;;(require 'go-autocomplete)
+
+;; Enable auto-complete
+;;(auto-complete-mode 1)
+
+;; Define keymaps
+;;(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+(global-set-key (kbd"C-c C-c") 'godef-jump)
+
+;; Set some quick config vals
+;; (setq ac-auto-start 1)
+;; (setq ac-auto-show-menu 0.8)
+
+;; Add go path.
+(add-to-list 'exec-path "~/go/bin")
+
+;; Automatically format code on save
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+
+
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+(setq company-selection-wrap-around t)
+
+;; Figure out how to make company mode non-useless.
+;; We sort that out and all is well.
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -47,7 +85,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(julia-mode company-go go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -108,6 +146,9 @@
 (defun setup-go-mode ()
   (interactive)
   (go-mode)
+  ((lambda ()
+    (set (make-local-variable 'company-backends) '(company-go))
+    (company-mode)))
   (company-mode)
   )
 
@@ -129,17 +170,12 @@
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
 
-
-
 (defun save-scss ()
   (when (eq major-mode 'scss-mode)
     (web-beautify-css))
   )
 
-
 (add-hook 'before-save-hook #'save-scss)
-;;(add-hook 'javascript-mode-hook #'save-javascript)
-
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
