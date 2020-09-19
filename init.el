@@ -32,6 +32,7 @@
 
 
 
+
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
@@ -85,13 +86,23 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;; Multiple cursor setiup.
+(defun start-multiple-cursors()
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  )
+
+(start-multiple-cursors)
 
 
 (defun setup-tide-mode ()
@@ -158,11 +169,28 @@
   (company-mode)
   )
 
+
+(defun setup-python-mode ()
+  (interactive)
+  (python-mode)
+  (add-to-list 'company-backends 'company-jedi)
+  (company-mode)
+  (yapf-mode)
+  )
+
+
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
+(add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
+
+(add-hook 'python-mode-hook 'yapf-mode)
+(add-hook 'python-mode-hook 'company-mode)
+
+
+
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
@@ -189,8 +217,6 @@
 (add-to-list 'load-path "/home/alex/.emacs.d/elpa/")
 ;;(require 'py-yapf)
 ;;(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
-(add-hook 'python-mode-hook 'yapf-mode)
-(add-hook 'python-mode-hook 'company-mode)
 
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
