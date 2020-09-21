@@ -31,8 +31,6 @@
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 
-
-
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
