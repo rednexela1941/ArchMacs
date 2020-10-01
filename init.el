@@ -222,3 +222,11 @@
 ;; Remove the stupid sleep command
 (global-unset-key (kbd "C-z"))
 
+
+(setq c-default-style
+      '((java-mode . "java")
+        (awk-mode . "awk")
+	(c-mode . "k&r")
+        (other . "gnu")))
+
+;; Setup clang-format for C lang, use linux style or K&R.
