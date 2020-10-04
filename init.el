@@ -4,6 +4,7 @@
 (package-initialize)
 
 
+(setq-default tab-width 4)
 ;; (when (memq window-system '(mac ns x))
 ;;   (exec-path-from-shell-initialize))
 
@@ -17,6 +18,9 @@
 
 ;; Define keymaps
 ;;(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+
+
+
 (global-set-key (kbd"C-c C-c") 'godef-jump)
 
 ;; Set some quick config vals
