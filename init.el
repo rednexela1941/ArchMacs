@@ -19,8 +19,6 @@
 ;; Define keymaps
 ;;(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
-
-
 (global-set-key (kbd"C-c C-c") 'godef-jump)
 
 ;; Set some quick config vals
@@ -233,7 +231,42 @@
 (setq c-default-style
       '((java-mode . "java")
         (awk-mode . "awk")
-	(c-mode . "k&r")
+		(c-mode . "k&r")
         (other . "gnu")))
 
 ;; Setup clang-format for C lang, use linux style or K&R.
+
+;; tag a line for jumping.
+(defun jmp-tag-line () 
+  (interactive)
+  (setq jmp-tag (line-number-at-pos))
+  (message (concat "Set jmp-tag to line: " (number-to-string jmp-tag)))
+  )
+
+;; Return to position jmped from.
+(defun jmp-back ()
+  (interactive)
+  (if last-jmp-tag 
+	  (progn
+		(goto-line last-jmp-tag)
+		(message (concat "Jumped back to line: " (number-to-string last-jmp-tag))))
+	(message "No last-jmp-tag found.")
+	)
+  )
+
+;; jmp to tag.
+(defun jmp-to-tag ()
+  (interactive)
+  (if jmp-tag
+	  (progn
+		(setq last-jmp-tag (line-number-at-pos))
+		(goto-line jmp-tag)
+		(message (concat "Jumped to line: " (number-to-string jmp-tag))))
+	(message "No jmp-tag set.")
+	)
+  )
+
+;; jump keys.
+(global-set-key (kbd "C-x J") 'jmp-back) ;; Tag current line
+(global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tagged line.
+(global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp back.
