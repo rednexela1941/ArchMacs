@@ -8,6 +8,9 @@
 ;; (when (memq window-system '(mac ns x))
 ;;   (exec-path-from-shell-initialize))
 
+(global-set-key (kbd "C-x g") 'magit-status)
+
+
 
 ;;(ac-config-default)
 ;;(global-auto-complete-mode t)
