@@ -5,28 +5,10 @@
 
 
 (setq-default tab-width 4)
-;; (when (memq window-system '(mac ns x))
-;;   (exec-path-from-shell-initialize))
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-
-
-;;(ac-config-default)
-;;(global-auto-complete-mode t)
-;;(require 'go-autocomplete)
-
-;; Enable auto-complete
-;;(auto-complete-mode 1)
-
-;; Define keymaps
-;;(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-
 (global-set-key (kbd"C-c C-c") 'godef-jump)
-
-;; Set some quick config vals
-;; (setq ac-auto-start 1)
-;; (setq ac-auto-show-menu 0.8)
 
 ;; Add go path.
 (add-to-list 'exec-path "~/go/bin")
@@ -40,9 +22,6 @@
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 (setq company-selection-wrap-around t)
-
-;; Figure out how to make company mode non-useless.
-;; We sort that out and all is well.
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -66,7 +45,6 @@
 
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
-;; Syntax (load-theme 'name t)
 ;;(load-theme 'doom-one t)
 (load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
@@ -74,14 +52,6 @@
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
     ))
-
-;; (defun ensure-packages-installed (&rest packages)
-;;   (mapcar (lambda (package)
-;;     (unless (package-installed-p package)
-;;       (package-install package))) packages))
-;; ;; Ensure company mode
-;; (ensure-packages-installed
-;;   'company)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -116,16 +86,13 @@
   (tide-setup)
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-
   (tide-hl-identifier-mode +1)
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
   (company-mode )
   (web-mode)
-
   (eldoc-mode )
-;;  (web-mode +1)
 )
 
 
@@ -151,7 +118,6 @@
   (tide-setup)
   (flycheck-mode)
   )
-
 
 (defun setup-c-mode ()
   (interactive)
@@ -195,9 +161,6 @@
 (add-hook 'python-mode-hook 'yapf-mode)
 (add-hook 'python-mode-hook 'company-mode)
 
-
-
-
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
@@ -214,12 +177,6 @@
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
 
-;;(message "This message appears in the echo area!")
-
-;;(add-hook 'before-save-hook 'css-save-hook)
-;;(add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-
 (add-to-list 'load-path "/home/alex/.emacs.d/elpa/")
 ;;(require 'py-yapf)
 ;;(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
@@ -230,14 +187,11 @@
 ;; Remove the stupid sleep command
 (global-unset-key (kbd "C-z"))
 
-
 (setq c-default-style
       '((java-mode . "java")
         (awk-mode . "awk")
 		(c-mode . "k&r")
         (other . "gnu")))
-
-;; Setup clang-format for C lang, use linux style or K&R.
 
 ;; tag a line for jumping.
 (defun jmp-tag-line () 
