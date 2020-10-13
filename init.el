@@ -41,7 +41,7 @@
 
 (setq x-super-keysym 'meta)
 
-(set-frame-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 18")
 
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
