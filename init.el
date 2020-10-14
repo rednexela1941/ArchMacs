@@ -39,7 +39,7 @@
 
 (setq x-super-keysym 'meta)
 
-(set-frame-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 8")
 
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
@@ -222,6 +222,6 @@
   )
 
 ;; jump keys.
-(global-set-key (kbd "C-x J") 'jmp-back) ;; Tag current line
-(global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tagged line.
-(global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp back.
+(global-set-key (kbd "C-x J") 'jmp-back) ;; Jmp back.
+(global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tag
+(global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp tag line.
