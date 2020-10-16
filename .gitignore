@@ -2,3 +2,4 @@ auto-save-list/
 url/
 elpa/
 transient/
+.mc-lists.el

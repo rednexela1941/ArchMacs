@@ -57,7 +57,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(company-erlang erlang magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -100,6 +100,7 @@
   (company-mode)
   (tide-mode)
   (flycheck-mode)
+  (message "tsx-mode")
 )
 
 
@@ -107,6 +108,7 @@
   (interactive)
   (scss-mode)
   (company-mode)
+  (message "setup-css-mode")
   )
 
 (defun setup-ts-mode ()
@@ -115,6 +117,7 @@
   (company-mode)
   (tide-setup)
   (flycheck-mode)
+  (message "setup-ts-mode")
   )
 
 (defun setup-c-mode ()
@@ -122,6 +125,7 @@
   (c-mode)
   (company-mode)
   (c-turn-on-eldoc-mode)
+  (message "setup-c-mode")
   )
 
 (defun setup-go-mode ()
@@ -131,12 +135,14 @@
     (set (make-local-variable 'company-backends) '(company-go))
     (company-mode)))
   (company-mode)
+  (message "setup-go-mode")
   )
 
 (defun setup-julia-mode ()
   (interactive)
   (julia-mode)
   (company-mode)
+  (message "setup-julia-mode")
   )
 
 
@@ -146,6 +152,7 @@
   (add-to-list 'company-backends 'company-jedi)
   (company-mode)
   (yapf-mode)
+  (message "setup-python-mode")
   )
 
 
@@ -155,6 +162,7 @@
 (add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 (add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
+(add-to-list 'auto-mode-alist '("\\.go\\'" . setup-go-mode))
 
 (add-hook 'python-mode-hook 'yapf-mode)
 (add-hook 'python-mode-hook 'company-mode)
