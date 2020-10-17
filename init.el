@@ -227,3 +227,8 @@
 (global-set-key (kbd "C-x J") 'jmp-back) ;; Tag current line
 (global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tagged line.
 (global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp back.
+
+;; Add in perl style regex.
+
+
+
