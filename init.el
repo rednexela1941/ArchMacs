@@ -3,32 +3,57 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+
 (setq-default tab-width 4)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd"C-c C-c") 'godef-jump)
 
-;; Add go path.
-(add-to-list 'exec-path "~/go/bin")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
-;; Automatically format code on save
-(setq gofmt-command "goimports")
-(add-hook 'before-save-hook 'gofmt-before-save)
+
+;;-------Display-------
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(setq-default tab-width 4)
+
+;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
+;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
+;;(load-theme 'doom-one t)
+(load-theme 'gruvbox-dark-medium t)
+;;(load-theme 'humanoid-dark t)
+(global-set-key (kbd "<f6>")
+  (lambda() (interactive) (find-file "~/.emacs.d/init.el")
+    ))
 
 
+
+;;-------Magit-------
+(global-set-key (kbd "C-x g") 'magit-status)
+
+
+;;-------Company Mode-------
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 (setq company-selection-wrap-around t)
 
-(tool-bar-mode -1)
-(menu-bar-mode -1)
 
 (setq create-lockfiles nil)
-
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
-
 (setq auto-save-file-name-transforms
      `((".*" ,temporary-file-directory t)))
 
@@ -41,32 +66,12 @@
 
 (set-frame-font "Source Code Pro 8")
 
-;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
-;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
-;;(load-theme 'doom-one t)
-(load-theme 'gruvbox-dark-medium t)
-;;(load-theme 'humanoid-dark t)
-
-(global-set-key (kbd "<f6>")
-  (lambda() (interactive) (find-file "~/.emacs.d/init.el")
-    ))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company-erlang erlang magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;;Magit
-(global-set-key (kbd"C-x g") 'magit-status)
+;;-------Go Lang-------
+(global-set-key (kbd"C-c C-c") 'godef-jump)
+(add-to-list 'exec-path "~/go/bin") 
+;; Automatically format code on save
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 
 ;; Multiple cursor setiup.
@@ -100,9 +105,8 @@
   (company-mode)
   (tide-mode)
   (flycheck-mode)
-  (message "tsx-mode")
+  (tide-restart-server)
 )
-
 
 (defun setup-css-mode ()
   (interactive)
