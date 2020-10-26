@@ -50,10 +50,9 @@
 (setq company-minimum-prefix-length 1)
 (setq company-selection-wrap-around t)
 
-
 (setq create-lockfiles nil)
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
+;; (setq backup-directory-alist
+;;       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
      `((".*" ,temporary-file-directory t)))
 
@@ -233,7 +232,27 @@
 	)
   )
 
+(defun jmp-start ()
+  (interactive)
+  (progn
+	(jmp-tag-line)
+	(beginning-of-buffer)
+	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
+	)))
+
+(defun jmp-end ()
+  (interactive)
+  (progn
+	(jmp-tag-line)
+	(end-of-buffer)
+	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
+	)))
+
 ;; jump keys.
 (global-set-key (kbd "C-x J") 'jmp-back) ;; Jmp back.
 (global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tag
 (global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp tag line.
+(global-set-key (kbd "M-<") 'jmp-start)
+(global-set-key (kbd "M->") 'jmp-end)
+
+
