@@ -15,7 +15,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,7 +27,18 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq-default tab-width 4)
+(set-frame-font "Source Code Pro 10")
+(setq create-lockfiles nil)
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+(setq x-super-keysym 'meta)
+(global-unset-key (kbd "C-z"))
 
+;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-one t)
@@ -46,20 +57,7 @@
 (setq company-minimum-prefix-length 1)
 (setq company-selection-wrap-around t)
 
-(setq create-lockfiles nil)
-;; (setq backup-directory-alist
-;;       `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-     `((".*" ,temporary-file-directory t)))
-
 (icomplete-mode 1)
-
-(when (version<= "26.0.50" emacs-version )
-  (global-display-line-numbers-mode))
-
-(setq x-super-keysym 'meta)
-
-(set-frame-font "Source Code Pro 8")
 
 ;;-------Go Lang-------
 (global-set-key (kbd"C-c C-c") 'godef-jump)
@@ -117,7 +115,6 @@
   (eldoc-mode )
 )
 
-
 (defun tsx-mode ()
   (interactive)
   (web-mode)
@@ -158,6 +155,7 @@
     (set (make-local-variable 'company-backends) '(company-go))
     (company-mode)))
   (company-mode)
+  (flycheck-mode)
   (message "setup-go-mode")
   )
 
@@ -167,7 +165,6 @@
   (company-mode)
   (message "setup-julia-mode")
   )
-
 
 (defun setup-python-mode ()
   (interactive)
@@ -213,8 +210,11 @@
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-;; Remove the stupid sleep command
-(global-unset-key (kbd "C-z"))
+
+;; Rust.
+(setq rust-format-on-save t)
+
+
 
 (setq c-default-style
       '((java-mode . "java")
@@ -274,3 +274,8 @@
 (global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp tag line.
 (global-set-key (kbd "M-<") 'jmp-start)
 (global-set-key (kbd "M->") 'jmp-end)
+;; Perl regex expressions.
+
+;; Slime
+(setq inferior-lisp-program "sbcl")
+(slime-setup '(slime-fancy slime-company))
