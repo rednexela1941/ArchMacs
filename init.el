@@ -23,7 +23,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-
 ;;-------Display-------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -38,11 +37,8 @@
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
     ))
 
-
-
 ;;-------Magit-------
 (global-set-key (kbd "C-x g") 'magit-status)
-
 
 ;;-------Company Mode-------
 (add-hook 'after-init-hook 'global-company-mode)
@@ -82,6 +78,30 @@
 
 (start-multiple-cursors)
 
+;; Perl Formatter: Requires https://github.com/perltidy/perltidy
+(defun perltidy ()
+  (interactive) 
+  (let ((doc (buffer-string)) (tmpfile (concat "/tmp/emacs_perltidy_" (buffer-name) (s-replace ":" "" (s-replace " " "" (current-time-string))))))
+	(progn 
+	  (with-temp-file tmpfile
+		(progn 
+		  (write-region doc nil tmpfile)
+		  (shell-command (concat "perltidy -ce " tmpfile))
+		  )  
+		)
+	  (insert-file-contents (concat tmpfile ".tdy") nil nil nil t)
+	  (shell-command (concat "rm "(concat tmpfile "*")))
+	  )
+	)
+  )
+
+(defun setup-perl-mode()
+  (interactive)
+  (perl-mode)
+  (company-mode)
+  (flycheck-mode)
+  (add-hook 'before-save-hook #'perltidy 0 'local)
+  )
 
 (defun setup-tide-mode ()
   (interactive)
@@ -158,7 +178,7 @@
   (message "setup-python-mode")
   )
 
-
+(add-to-list 'auto-mode-alist '("\\.pl\\'" . setup-perl-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
@@ -254,5 +274,3 @@
 (global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp tag line.
 (global-set-key (kbd "M-<") 'jmp-start)
 (global-set-key (kbd "M->") 'jmp-end)
-
-
