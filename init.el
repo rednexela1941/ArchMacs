@@ -27,7 +27,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq-default tab-width 4)
-(set-frame-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 8")
 (setq create-lockfiles nil)
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
