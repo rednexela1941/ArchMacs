@@ -225,3 +225,6 @@
 ;; Slime
 (setq inferior-lisp-program "sbcl")
 (slime-setup '(slime-fancy slime-company))
+
+
+;; use (shell-command-to-string "ls") to execute shell commands.
