@@ -3,6 +3,12 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+
+(setq-default tab-width 4)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd"C-c C-c") 'godef-jump)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -17,12 +23,11 @@
  ;; If there is more than one, they won't work right.
  )
 
-
 ;;-------Display-------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (setq-default tab-width 4)
-(set-frame-font "Source Code Pro 10")
+(set-frame-font "Source Code Pro 8")
 (setq create-lockfiles nil)
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -51,6 +56,7 @@
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 (setq company-selection-wrap-around t)
+
 (icomplete-mode 1)
 
 ;;-------Go Lang-------
@@ -70,6 +76,30 @@
 
 (start-multiple-cursors)
 
+;; Perl Formatter: Requires https://github.com/perltidy/perltidy
+(defun perltidy ()
+  (interactive) 
+  (let ((doc (buffer-string)) (tmpfile (concat "/tmp/emacs_perltidy_" (buffer-name) (s-replace ":" "" (s-replace " " "" (current-time-string))))))
+	(progn 
+	  (with-temp-file tmpfile
+		(progn 
+		  (write-region doc nil tmpfile)
+		  (shell-command (concat "perltidy -ce " tmpfile))
+		  )  
+		)
+	  (insert-file-contents (concat tmpfile ".tdy") nil nil nil t)
+	  (shell-command (concat "rm "(concat tmpfile "*")))
+	  )
+	)
+  )
+
+(defun setup-perl-mode()
+  (interactive)
+  (perl-mode)
+  (company-mode)
+  (flycheck-mode)
+  (add-hook 'before-save-hook #'perltidy 0 'local)
+  )
 
 (defun setup-tide-mode ()
   (interactive)
@@ -98,6 +128,7 @@
   (interactive)
   (scss-mode)
   (company-mode)
+  (message "setup-css-mode")
   )
 
 (defun setup-ts-mode ()
@@ -106,6 +137,7 @@
   (company-mode)
   (tide-setup)
   (flycheck-mode)
+  (message "setup-ts-mode")
   )
 
 (defun setup-c-mode ()
@@ -113,6 +145,7 @@
   (c-mode)
   (company-mode)
   (c-turn-on-eldoc-mode)
+  (message "setup-c-mode")
   )
 
 (defun setup-go-mode ()
@@ -123,12 +156,14 @@
     (company-mode)))
   (company-mode)
   (flycheck-mode)
+  (message "setup-go-mode")
   )
 
 (defun setup-julia-mode ()
   (interactive)
   (julia-mode)
   (company-mode)
+  (message "setup-julia-mode")
   )
 
 (defun setup-python-mode ()
@@ -137,8 +172,10 @@
   (add-to-list 'company-backends 'company-jedi)
   (company-mode)
   (yapf-mode)
+  (message "setup-python-mode")
   )
 
+(add-to-list 'auto-mode-alist '("\\.pl\\'" . setup-perl-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
@@ -215,11 +252,28 @@
 	)
   )
 
-;; jump keys.
-(global-set-key (kbd "C-x J") 'jmp-back) ;; Tag current line
-(global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tagged line.
-(global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp back.
+(defun jmp-start ()
+  (interactive)
+  (progn
+	(jmp-tag-line)
+	(beginning-of-buffer)
+	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
+	)))
 
+(defun jmp-end ()
+  (interactive)
+  (progn
+	(jmp-tag-line)
+	(end-of-buffer)
+	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
+	)))
+
+;; jump keys.
+(global-set-key (kbd "C-x J") 'jmp-back) ;; Jmp back.
+(global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tag
+(global-set-key (kbd "M-j") 'jmp-tag-line) ;; Jmp tag line.
+(global-set-key (kbd "M-<") 'jmp-start)
+(global-set-key (kbd "M->") 'jmp-end)
 ;; Perl regex expressions.
 
 ;; Slime
