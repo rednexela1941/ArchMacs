@@ -3,7 +3,6 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-
 (setq-default tab-width 4)
 
 (global-set-key (kbd "C-x g") 'magit-status)
