@@ -4,3 +4,4 @@ elpa/
 transient/
 .mc-lists.el
 
+ac-comphist.dat
