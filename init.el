@@ -25,6 +25,9 @@
 ;;-------Display-------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+(setq column-number-mode 1)
+(line-number-mode)
 (setq-default tab-width 4)
 (set-frame-font "Source Code Pro 8")
 (setq create-lockfiles nil)
@@ -37,12 +40,13 @@
 (setq x-super-keysym 'meta)
 (global-unset-key (kbd "C-z"))
 
+
 ;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-one t)
-(load-theme 'gruvbox-dark-medium t)
-;;(load-theme 'humanoid-dark t)
+;;(load-theme 'gruvbox-dark-medium t)
+(load-theme 'humanoid-dark t)
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
     ))
@@ -278,6 +282,8 @@
 ;; Slime
 (setq inferior-lisp-program "sbcl")
 (slime-setup '(slime-fancy slime-company))
-
-
 ;; use (shell-command-to-string "ls") to execute shell commands.
+
+
+(setq org-todo-keywords
+      '((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" )))
