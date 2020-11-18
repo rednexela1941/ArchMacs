@@ -45,8 +45,8 @@
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-one t)
-;;(load-theme 'gruvbox-dark-medium t)
-(load-theme 'humanoid-dark t)
+(load-theme 'gruvbox-dark-medium t)
+;; (load-theme 'humanoid-dark t)
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
     ))
@@ -286,4 +286,4 @@
 
 
 (setq org-todo-keywords
-      '((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" )))
+      '((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" )))
