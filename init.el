@@ -2,9 +2,7 @@
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-(setq-default tab-width 4)
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd"C-c C-c") 'godef-jump)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -14,7 +12,7 @@
    '(monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
+ ;en n  ; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
@@ -36,6 +34,8 @@
   (global-display-line-numbers-mode))
 (setq x-super-keysym 'meta)
 (global-unset-key (kbd "C-z"))
+(global-set-key (kbd "C-x g") 'magit-status)
+
 
 ;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
