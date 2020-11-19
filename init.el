@@ -2,19 +2,16 @@
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-
 (setq-default tab-width 4)
-
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd"C-c C-c") 'godef-jump)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -40,13 +37,19 @@
 (setq x-super-keysym 'meta)
 (global-unset-key (kbd "C-z"))
 
-
 ;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
+;;(load-theme 'doom-acario-dark t)
 ;;(load-theme 'doom-one t)
-(load-theme 'gruvbox-dark-medium t)
-;; (load-theme 'humanoid-dark t)
+;;(load-theme 'gruvbox-dark-medium t)
+;;(load-theme 'humanoid-dark t)
+;;(load-theme 'gruvbox-dark-medium t)
+;;(load-theme 'gruvbox-dark-hard t)
+(load-theme 'monokai t)
+;;(load-theme 'humanoid-dark t)
+;;(load-theme 'wilson t)
+
 (global-set-key (kbd "<f6>")
   (lambda() (interactive) (find-file "~/.emacs.d/init.el")
     ))
@@ -186,7 +189,6 @@
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 (add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . setup-go-mode))
-
 (add-hook 'python-mode-hook 'yapf-mode)
 (add-hook 'python-mode-hook 'company-mode)
 
@@ -216,7 +218,6 @@
 
 ;; Rust.
 (setq rust-format-on-save t)
-
 
 
 (setq c-default-style
@@ -284,6 +285,7 @@
 (slime-setup '(slime-fancy slime-company))
 ;; use (shell-command-to-string "ls") to execute shell commands.
 
-
 (setq org-todo-keywords
-      '((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" )))
+
+'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
+
