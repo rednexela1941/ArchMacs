@@ -37,6 +37,7 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 
+
 ;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
@@ -253,8 +254,7 @@
 		(goto-line jmp-tag)
 		(message (concat "Jumped to line: " (number-to-string jmp-tag))))
 	(message "No jmp-tag set.")
-	)
-  )
+	))
 
 (defun jmp-start ()
   (interactive)
@@ -262,7 +262,7 @@
 	(jmp-tag-line)
 	(beginning-of-buffer)
 	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
-	)))
+			 )))
 
 (defun jmp-end ()
   (interactive)
@@ -270,8 +270,24 @@
 	(jmp-tag-line)
 	(end-of-buffer)
 	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
-	)))
+			 )))
 
+(defun replace-region-matches ()
+  (interactive)
+  (if (region-active-p)
+	  (let ((startpos (region-beginning)) (qstring (buffer-substring (region-beginning) (region-end))))		
+		(let ((rstring (read-string (concat "Replace " qstring ": "))))
+		  (progn 
+			(replace-string qstring rstring nil (point-min) (point-max))
+			(goto-char startpos)
+			(message "Replaced %s with %s in buffer." qstring rstring)
+		  )))
+	(message "No region defined.")
+	)
+  )
+
+
+(global-set-key (kbd "C-c C-r") 'replace-region-matches)
 ;; jump keys.
 (global-set-key (kbd "C-x J") 'jmp-back) ;; Jmp back.
 (global-set-key (kbd "C-x j") 'jmp-to-tag) ;; Jmp to tag
