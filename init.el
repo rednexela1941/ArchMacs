@@ -43,11 +43,17 @@
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-acario-dark t)
 ;;(load-theme 'doom-one t)
+;;(load-theme 'doom-vibrant t)
+(if (display-graphic-p)
+	(load-theme 'doom-outrun-electric t)
+    (load-theme 'monokai t)
+ )
+
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'gruvbox-dark-hard t)
-(load-theme 'monokai t)
+;;(load-theme 'monokai t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'wilson t)
 
@@ -303,5 +309,5 @@
 
 (setq org-todo-keywords
 
-'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
+'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "HACKED" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
 

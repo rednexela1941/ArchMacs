@@ -5,3 +5,4 @@ transient/
 .mc-lists.el
 ac-comphist.dat
 async-bytecomp.log
+tramp
