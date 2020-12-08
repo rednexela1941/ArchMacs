@@ -17,6 +17,11 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;-------Org-------
+(setq org-todo-keywords
+'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "HACKED" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
+
+
 ;;-------Display-------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -36,19 +41,17 @@
 (global-unset-key (kbd "C-z"))
 (global-set-key (kbd "C-x g") 'magit-status)
 
-
-
 ;;-------Themes-------
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-acario-dark t)
 ;;(load-theme 'doom-one t)
 ;;(load-theme 'doom-vibrant t)
+;;	(load-theme 'doom-outrun-electric t)
 (if (display-graphic-p)
-	(load-theme 'doom-outrun-electric t)
+	(load-theme 'doom-vibrant t)
     (load-theme 'monokai t)
  )
-
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'gruvbox-dark-medium t)
@@ -306,8 +309,4 @@
 (setq inferior-lisp-program "sbcl")
 (slime-setup '(slime-fancy slime-company))
 ;; use (shell-command-to-string "ls") to execute shell commands.
-
-(setq org-todo-keywords
-
-'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "HACKED" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
 
