@@ -26,7 +26,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(set-frame-font "Source Code Pro-8")
+(set-frame-font "Source Code Pro 8")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 8"))
 (setq column-number-mode 1)
 (line-number-mode)
 (setq-default tab-width 2)
@@ -42,16 +43,16 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;;-------Themes-------
+(if (display-graphic-p)
+	(load-theme 'humanoid-dark t)
+  (load-theme 'monokai t)
+ )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-acario-dark t)
 ;;(load-theme 'doom-one t)
 ;;(load-theme 'doom-vibrant t)
 ;;	(load-theme 'doom-outrun-electric t)
-(if (display-graphic-p)
-	(load-theme 'doom-vibrant t)
-    (load-theme 'monokai t)
- )
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'gruvbox-dark-medium t)
@@ -214,9 +215,6 @@
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
 (defun save-scss ()
   (when (eq major-mode 'scss-mode)
     (web-beautify-css))
@@ -229,6 +227,7 @@
 
 (add-hook 'before-save-hook #'save-scss)
 (add-hook 'before-save-hook #'save-javascript)
+(add-hook 'before-save-hook 'tide-format-before-save)
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
@@ -240,11 +239,10 @@
 ;; Rust.
 (setq rust-format-on-save t)
 
-
 (setq c-default-style
       '((java-mode . "java")
         (awk-mode . "awk")
-		(c-mode . "k&r")
+				(c-mode . "k&r")
         (other . "gnu")))
 
 ;; tag a line for jumping.
