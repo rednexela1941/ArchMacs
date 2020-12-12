@@ -9,13 +9,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+   '(monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;en n  ; If you edit it by hand, you could mess it up, so be careful.
+ ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 ;;-------Org-------
 (setq org-todo-keywords
@@ -26,10 +26,10 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(set-frame-font "Source Code Pro-8")
 (setq column-number-mode 1)
 (line-number-mode)
-(setq-default tab-width 4)
-(set-frame-font "Source Code Pro 8")
+(setq-default tab-width 2)
 (setq create-lockfiles nil)
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -156,6 +156,14 @@
   (message "setup-ts-mode")
   )
 
+(defun setup-javascript-mode ()
+  (interactive)
+  (company-mode)
+  (flycheck-mode)
+  (javascript-mode)
+  (message "setup-javascript-mode")
+  )
+
 (defun setup-c-mode ()
   (interactive)
   (c-mode)
@@ -195,6 +203,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . setup-js-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 (add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
@@ -213,7 +222,13 @@
     (web-beautify-css))
   )
 
+(defun save-javascript ()
+  (when (eq major-mode 'javascript-mode)
+    (web-beautify-js))
+  )
+
 (add-hook 'before-save-hook #'save-scss)
+(add-hook 'before-save-hook #'save-javascript)
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
@@ -221,10 +236,6 @@
 (add-to-list 'load-path "/home/alex/.emacs.d/elpa/")
 ;;(require 'py-yapf)
 ;;(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
-
-(require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
 
 ;; Rust.
 (setq rust-format-on-save t)
