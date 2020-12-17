@@ -45,14 +45,13 @@
 ;;(load-theme 'doom-one t)
 ;;(load-theme 'doom-vibrant t)
 (if (display-graphic-p)
-	(load-theme 'doom-outrun-electric t)
+	(load-theme 'humanoid-dark t)
     (load-theme 'monokai t)
  )
-
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'gruvbox-dark-medium t)
-;;(load-theme 'gruvbox-dark-hard t)
+;;
 ;;(load-theme 'monokai t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'wilson t)
