@@ -9,22 +9,28 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify js2-mode tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+	 '(s "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-jedi company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;en n  ; If you edit it by hand, you could mess it up, so be careful.
+ ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
+
+;;-------Org-------
+(setq org-todo-keywords
+'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "HACKED" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
+
 
 ;;-------Display-------
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(set-frame-font "Source Code Pro 8")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 8"))
 (setq column-number-mode 1)
 (line-number-mode)
-(setq-default tab-width 4)
-(set-frame-font "Source Code Pro 8")
+(setq-default tab-width 2)
 (setq create-lockfiles nil)
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -36,18 +42,21 @@
 (global-unset-key (kbd "C-z"))
 (global-set-key (kbd "C-x g") 'magit-status)
 
-
-
 ;;-------Themes-------
+(if (display-graphic-p)
+	(load-theme 'humanoid-dark t)
+  (load-theme 'monokai t)
+ )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
 ;;(load-theme 'doom-acario-dark t)
 ;;(load-theme 'doom-one t)
 ;;(load-theme 'doom-vibrant t)
-(if (display-graphic-p)
-	(load-theme 'humanoid-dark t)
-    (load-theme 'monokai t)
- )
+;; (if (display-graphic-p)
+;; 		(load-theme 'humanoid-dark t)
+;;   (load-theme 'monokai t)
+;;  )
+;;(load-theme 'doom-outrun-electric t)
 ;;(load-theme 'gruvbox-dark-medium t)
 ;;(load-theme 'humanoid-dark t)
 ;;(load-theme 'gruvbox-dark-medium t)
@@ -152,6 +161,14 @@
   (message "setup-ts-mode")
   )
 
+(defun setup-javascript-mode ()
+  (interactive)
+  (company-mode)
+  (flycheck-mode)
+  (javascript-mode)
+  (message "setup-javascript-mode")
+  )
+
 (defun setup-c-mode ()
   (interactive)
   (c-mode)
@@ -191,6 +208,7 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . setup-css-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . setup-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . setup-javascript-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . setup-c-mode))
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 (add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
@@ -201,15 +219,19 @@
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
 (defun save-scss ()
   (when (eq major-mode 'scss-mode)
     (web-beautify-css))
   )
 
+(defun save-javascript ()
+  (when (eq major-mode 'javascript-mode)
+    (web-beautify-js))
+  )
+
 (add-hook 'before-save-hook #'save-scss)
+(add-hook 'before-save-hook #'save-javascript)
+(add-hook 'before-save-hook 'tide-format-before-save)
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
@@ -218,18 +240,13 @@
 ;;(require 'py-yapf)
 ;;(add-hook 'python-mode-hook 'py-yapf-enable-on-save)
 
-(require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-
 ;; Rust.
 (setq rust-format-on-save t)
-
 
 (setq c-default-style
       '((java-mode . "java")
         (awk-mode . "awk")
-		(c-mode . "k&r")
+				(c-mode . "k&r")
         (other . "gnu")))
 
 ;; tag a line for jumping.
@@ -305,8 +322,4 @@
 (setq inferior-lisp-program "sbcl")
 (slime-setup '(slime-fancy slime-company))
 ;; use (shell-command-to-string "ls") to execute shell commands.
-
-(setq org-todo-keywords
-
-'((sequence "TODO" "FEEDBACK" "VERIFY" "TEST" "NOTE" "QUESTION" "DESIGN" "HACKED" "|" "DONE" "DELEGATED" "PASSED" "NOTED" "ANSWERED" "IMPLEMENTED" "CANCELLED" )))
 
