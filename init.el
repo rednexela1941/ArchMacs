@@ -9,13 +9,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 '(neotree s "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+	 '(prettier-js neotree s "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 ;;-------Org-------
 (setq org-todo-keywords
@@ -44,7 +44,7 @@
 
 ;;-------Themes-------
 (if (display-graphic-p)
-	(load-theme 'humanoid-dark t)
+	(load-theme 'doom-one t)
   (load-theme 'monokai t)
  )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
@@ -163,11 +163,14 @@
   (message "setup-ts-mode")
   )
 
+(setq prettier-js-args '(	"--single-quote" "--tab-width" "4" ))
+
 (defun setup-javascript-mode ()
   (interactive)
   (company-mode)
   (flycheck-mode)
   (javascript-mode)
+	(prettier-js-mode)
   (message "setup-javascript-mode")
   )
 
@@ -200,9 +203,9 @@
 (defun setup-python-mode ()
   (interactive)
   (python-mode)
-  (add-to-list 'company-backends 'company-jedi)
-  (company-mode)
-  (yapf-mode)
+  ;; (add-to-list 'company-backends 'company-jedi)
+;;   (company-mode)
+;;  (yapf-mode)
   (message "setup-python-mode")
   )
 
@@ -215,7 +218,7 @@
 (add-to-list 'auto-mode-alist '("\\.jl\\'" . setup-julia-mode))
 (add-to-list 'auto-mode-alist '("\\.py\\'" . setup-python-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . setup-go-mode))
-(add-hook 'python-mode-hook 'yapf-mode)
+;; (add-hook 'python-mode-hook 'yapf-mode)
 (add-hook 'python-mode-hook 'company-mode)
 
 ;; aligns annotation to the right hand side
