@@ -9,7 +9,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 '(dockerfile-mode go-playground prettier-js neotree s "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+	 '(solarized-theme tango-plus-theme github-theme dockerfile-mode go-playground prettier-js neotree "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -45,7 +45,8 @@
 
 ;;-------Themes-------
 (if (display-graphic-p)
-	(load-theme 'doom-one t)
+		;;	(load-theme 'doom-one t)
+	(load-theme 'doom-molokai t)
 	(load-theme 'monokai t)
  )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
@@ -100,6 +101,13 @@
 
 (start-multiple-cursors)
 
+
+(defun s-replace (old new s)
+  "Replaces OLD with NEW in S."
+  (declare (pure t) (side-effect-free t))
+  (replace-regexp-in-string (regexp-quote old) new s t t))
+
+
 ;; Perl Formatter: Requires https://github.com/perltidy/perltidy
 (defun perltidy ()
 	(interactive) 
@@ -115,6 +123,13 @@
 		(shell-command (concat "rm "(concat tmpfile "*")))
 		)
 	)
+	)
+
+;; Ruby formatter: gem install rufo
+(defun rufo ()
+	(interactive)
+	(shell-command (concat "rufo " (buffer-file-name)))
+	(revert-buffer 't 't 't)
 	)
 
 (defun setup-perl-mode()
