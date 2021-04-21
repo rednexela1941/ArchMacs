@@ -9,7 +9,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 '(solarized-theme tango-plus-theme github-theme dockerfile-mode go-playground prettier-js neotree "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+	 '(acme-theme solarized-theme tango-plus-theme github-theme dockerfile-mode go-playground prettier-js neotree "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -23,12 +23,14 @@
 
 
 ;;-------Display-------
+;;(global-font-lock-mode -1)
+(global-font-lock-mode t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq-default indent-tabs-mode t)
-(set-frame-font "Source Code Pro 8")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 8"))
+(set-frame-font "Source Code Pro 9")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 9"))
 (setq column-number-mode 1)
 (line-number-mode)
 (setq-default tab-width 2)
@@ -45,8 +47,9 @@
 
 ;;-------Themes-------
 (if (display-graphic-p)
-		;;	(load-theme 'doom-one t)
-	(load-theme 'doom-molokai t)
+		(load-theme 'doom-one t)
+		;; (load-theme 'acme t)
+	;; (load-theme 'doom-molokai t)
 	(load-theme 'monokai t)
  )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
@@ -86,7 +89,7 @@
 
 ;;-------Go Lang-------
 (global-set-key (kbd"C-c C-c") 'godef-jump)
-(add-to-list 'exec-path "~/go/bin") 
+(add-to-list 'exec-path "~/go/bin")
 ;; Automatically format code on save
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
@@ -110,14 +113,14 @@
 
 ;; Perl Formatter: Requires https://github.com/perltidy/perltidy
 (defun perltidy ()
-	(interactive) 
+	(interactive)
 	(let ((doc (buffer-string)) (tmpfile (concat "/tmp/emacs_perltidy_" (buffer-name) (s-replace ":" "" (s-replace " " "" (current-time-string))))))
-	(progn 
+	(progn
 		(with-temp-file tmpfile
-		(progn 
+		(progn
 			(write-region doc nil tmpfile)
 			(shell-command (concat "perltidy -ce " tmpfile))
-			)	 
+			)
 		)
 		(insert-file-contents (concat tmpfile ".tdy") nil nil nil t)
 		(shell-command (concat "rm "(concat tmpfile "*")))
@@ -180,7 +183,7 @@
 	(message "setup-ts-mode")
 	)
 
-(setq prettier-js-args '(	"--single-quote" "--use-tabs" ))
+(setq prettier-js-args '(	"--single-quote" ))
 
 (defun setup-javascript-mode ()
 	(interactive)
@@ -243,7 +246,8 @@
 
 (defun save-scss ()
 	(when (eq major-mode 'scss-mode)
-		(web-beautify-css))
+		;; (web-beautify-css))
+		(+ 10 10))
 	)
 
 (defun save-javascript ()
@@ -251,9 +255,20 @@
 		(web-beautify-js))
 	)
 
+(defun save-c ()
+	(when (eq major-mode 'c-mode)
+		(clang-format-buffer))	
+	)
+
 (add-hook 'before-save-hook #'save-scss)
 ;; (add-hook 'before-save-hook #'save-javascript)
 ;;(add-hook 'before-save-hook 'tide-format-before-save)
+(add-hook 'before-save-hook #'save-c)
+
+;; (add-hook 'c-mode-common-hook
+;;        (function (lambda ()
+;;            (add-hook 'before-save-hook
+;;                      'clang-format-buffer))))
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
@@ -272,7 +287,7 @@
 				(other . "gnu")))
 
 ;; tag a line for jumping.
-(defun jmp-tag-line () 
+(defun jmp-tag-line ()
 	(interactive)
 	(setq jmp-tag (line-number-at-pos))
 	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag)))
@@ -281,7 +296,7 @@
 ;; Return to position jmped from.
 (defun jmp-back ()
 	(interactive)
-	(if last-jmp-tag 
+	(if last-jmp-tag
 		(progn
 		(goto-line last-jmp-tag)
 		(message (concat "Jumped back to line: " (number-to-string last-jmp-tag))))
@@ -306,7 +321,7 @@
 	(jmp-tag-line)
 	(beginning-of-buffer)
 	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
-			 )))
+)))
 
 (defun jmp-end ()
 	(interactive)
@@ -314,7 +329,7 @@
 	(jmp-tag-line)
 	(end-of-buffer)
 	(message (concat "Set jmp-tag to line: " (number-to-string jmp-tag))
-			 )))
+)))
 
 (defun replace-region-matches ()
 	(interactive)
@@ -327,8 +342,7 @@
 			(message "Replaced %s with %s in buffer." qstring rstring)
 			)))
 	(message "No region defined.")
-	)
-	)
+))
 
 
 (global-set-key (kbd "C-c C-r") 'replace-region-matches)
@@ -344,4 +358,23 @@
 (setq inferior-lisp-program "sbcl")
 (slime-setup '(slime-fancy slime-company))
 ;; use (shell-command-to-string "ls") to execute shell commands.
+
+(defun detab()
+	(interactive)
+	(untabify (point-min) (point-max))
+)
+
+(defun detrail()
+	(interactive)
+	(delete-trailing-whitespace (beginning-of-buffer) (end-of-buffer))
+	)
+
+
+;; (defun cgrep()
+;; 	(let ((path (file-name-directory (buffer-file-name))))
+;; 		(message (string-join '("cgrep " path)))
+;; 		)
+;; 	)
+
+;; (cgrep)
 
