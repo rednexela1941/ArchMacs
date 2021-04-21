@@ -369,12 +369,11 @@
 	(delete-trailing-whitespace (beginning-of-buffer) (end-of-buffer))
 	)
 
-
-;; (defun cgrep()
-;; 	(let ((path (file-name-directory (buffer-file-name))))
-;; 		(message (string-join '("cgrep " path)))
-;; 		)
-;; 	)
-
-;; (cgrep)
-
+(defun cgrep(exp)
+	(interactive "sregexp: ")
+	(let ((buf (generate-new-buffer "cgrep")) (output (shell-command-to-string (concat "cgrep --no-color --dir=" (file-name-directory (buffer-file-name)) " " exp))))
+		(progn
+			(message (buffer-name buf))
+			(display-buffer buf)
+			(with-current-buffer buf (insert output))))
+	)
