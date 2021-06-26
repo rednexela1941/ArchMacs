@@ -9,7 +9,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-	 '(acme-theme solarized-theme tango-plus-theme github-theme dockerfile-mode go-playground prettier-js neotree "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
+	 '(yaml-mode acme-theme solarized-theme tango-plus-theme github-theme dockerfile-mode go-playground prettier-js neotree "s" racer toml-mode flycheck-rust monokai-theme sublime-themes nasm-mode slime-company slime rust-mode clang-format magit multiple-cursors company-go go-autocomplete go-complete exec-path-from-shell julia-mode go-eldoc humanoid-themes go-mode gruvbox-theme c-eldoc lsp-mode json-mode yapfify tern scss-mode haskell-mode company-mode company-web web-mode tide ## web-beautify typescript-mode doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,8 +29,8 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq-default indent-tabs-mode t)
-(set-frame-font "Source Code Pro 9")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro 9"))
+(set-frame-font "Source Code Pro 6")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro 6"))
 (setq column-number-mode 1)
 (line-number-mode)
 (setq-default tab-width 2)
@@ -49,8 +49,8 @@
 (if (display-graphic-p)
 		(load-theme 'doom-one t)
 		;; (load-theme 'acme t)
-	;; (load-theme 'doom-molokai t)
-	(load-theme 'monokai t)
+	 ;; (load-theme 'doom-molokai t)
+	;;(load-theme 'monokai t)
  )
 ;;https://github.com/hlissner/emacs-doom-themes -- Doom Themes
 ;;https://github.com/greduan/emacs-theme-gruvbox -- Gruvbox Themes
@@ -90,6 +90,7 @@
 ;;-------Go Lang-------
 (global-set-key (kbd"C-c C-c") 'godef-jump)
 (add-to-list 'exec-path "~/go/bin")
+(add-to-list 'exec-path "~/.local/bin")
 ;; Automatically format code on save
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
@@ -119,7 +120,7 @@
 		(with-temp-file tmpfile
 		(progn
 			(write-region doc nil tmpfile)
-			(shell-command (concat "perltidy -ce " tmpfile))
+			(shell-command (concat "perltidy -ce -bli " tmpfile))
 			)
 		)
 		(insert-file-contents (concat tmpfile ".tdy") nil nil nil t)
@@ -202,13 +203,14 @@
 	(message "setup-c-mode")
 	)
 
+(add-hook 'go-mode-hook #'lsp-deferred)
 (defun setup-go-mode ()
 	(interactive)
 	(go-mode)
 	((lambda ()
 		(set (make-local-variable 'company-backends) '(company-go))
 		(company-mode)))
-	(company-mode)
+;;	(company-mode)
 	(flycheck-mode)
 	(message "setup-go-mode")
 	)
@@ -254,6 +256,7 @@
 	(when (eq major-mode 'javascript-mode)
 		(web-beautify-js))
 	)
+(setq clang-format-fallback-style "GNU")
 
 (defun save-c ()
 	(when (eq major-mode 'c-mode)
@@ -272,6 +275,7 @@
 
 (setq company-dabbrev-downcase 0)
 (setq company-idle-delay 0)
+
 
 (add-to-list 'load-path "/home/alex/.emacs.d/elpa/")
 ;;(require 'py-yapf)
